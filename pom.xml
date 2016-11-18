@@ -25,6 +25,11 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>com.heroku.sdk</groupId>
+                    <artifactId>heroku-maven-plugin</artifactId>
+                    <version>1.0.3</version>
+                </plugin>
+                <plugin>
                     <groupId>org.wildfly.swarm</groupId>
                     <artifactId>wildfly-swarm-plugin</artifactId>
                     <version>1.0.0.Beta8</version>
@@ -85,9 +90,4 @@
             <version>0.1.1</version>
         </dependency>
     </dependencies>
-    <plugin>
-        <groupId>com.heroku.sdk</groupId>
-        <artifactId>heroku-maven-plugin</artifactId>
-        <version>1.0.3</version>
-    </plugin>
 </project>
