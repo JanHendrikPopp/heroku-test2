@@ -21,33 +21,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>projectodd-snapshots</id>
-            <name>Project:odd Snapshots from CI</name>
-            <url>https://repository-projectodd.forge.cloudbees.com/snapshot</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>projectodd-snapshots</id>
-            <name>Project:odd Snapshots from CI</name>
-            <url>https://repository-projectodd.forge.cloudbees.com/snapshot</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-
     <build>
         <pluginManagement>
             <plugins>
