@@ -30,12 +30,6 @@ public class Main {
 
         Container container = new Container();
 
-        // Extract the postgres connection details from the Heroku environment variable
-        // (which is not a JDBC URL)
-        DatabaseUrl databaseUrl = DatabaseUrl.extract();
-
-
-
         // Configure the KeycloakDS datasource to use postgres
         DatasourcesFraction datasourcesFraction = new DatasourcesFraction();
         datasourcesFraction
