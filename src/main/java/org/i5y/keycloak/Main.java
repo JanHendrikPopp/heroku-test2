@@ -34,26 +34,21 @@ public class Main {
         // (which is not a JDBC URL)
         DatabaseUrl databaseUrl = DatabaseUrl.extract();
 
-        URI dbUri = new URI(System.getenv("DATABASE_URL"));
-
-        String username = dbUri.getUserInfo().split(":")[0];
-        String password = dbUri.getUserInfo().split(":")[1];
-        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
 
 
         // Configure the KeycloakDS datasource to use postgres
         DatasourcesFraction datasourcesFraction = new DatasourcesFraction();
         datasourcesFraction
-                .jdbcDriver("org.postgresql", (d) -> {
-                    d.driverDatasourceClassName("org.postgresql.ds.PGSimpleDataSource");
-                    d.xaDatasourceClass("org.postgresql.xa.PGXADataSource");
-                    d.driverModuleName("org.postgresql");
+                .jdbcDriver("h2", (d) -> {
+                    d.driverClassName("org.h2.Driver");
+                    d.xaDatasourceClass("org.h2.jdbcx.JdbcDataSource");
+                    d.driverModuleName("com.h2database.h2");
                 })
-                .dataSource("KeycloakDS", (ds) -> {
-                    ds.driverName("org.postgresql");
-                    ds.connectionUrl(dbUrl);
-                    ds.userName(username);
-                    ds.password(password);
+                .dataSource("MyDS", (ds) -> {
+                    ds.driverName("h2");
+                    ds.connectionUrl("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
+                    ds.userName("sa");
+                    ds.password("sa");
                 });
 
         container.fraction(datasourcesFraction);

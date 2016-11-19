@@ -80,6 +80,10 @@
     <version>1.0.0.CR2</version>
 </dependency>
         <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>datasources</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.4-1206-jdbc42</version>
@@ -88,6 +92,12 @@
             <groupId>com.heroku.sdk</groupId>
             <artifactId>heroku-jdbc</artifactId>
             <version>0.1.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.0.60</version>
         </dependency>
     </dependencies>
 </project>
