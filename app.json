@@ -3,8 +3,5 @@
   "description": "Keycloak on Swarm on Heroku",
   "website": "https://github.com/JanHendrikPopp/heroku-test2",
   "repository": "https://github.com/JanHendrikPopp/heroku-test2",
-  "success_url": "/auth",
-  "addons": [
-    "heroku-postgresql:hobby-dev"
-  ]
+  "success_url": "/auth"
 }
