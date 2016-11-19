@@ -26,7 +26,7 @@ public class Main {
         // Heroku requires you bind to the specified PORT
         String port = System.getenv("PORT");
         if (port != null) {
-            System.setProperty("jboss.http.port", port);
+            System.setProperty("swarm.http.port", port);
         }
 
         Swarm swarm = new Swarm();
@@ -53,7 +53,7 @@ public class Main {
 
         // Set up container config to take advantage of HTTPS in heroku
         /*
-        container.fraction(new Fraction() {
+        swarm.fraction(new Fraction() {
             @Override
             public String simpleName() {
                 return "proxy-https";
