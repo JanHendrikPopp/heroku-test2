@@ -1,6 +1,7 @@
 package org.i5y.keycloak;
 
 import com.heroku.sdk.jdbc.DatabaseUrl;
+import org.wildfly.swarm.Swarm;
 import org.wildfly.swarm.config.undertow.BufferCache;
 import org.wildfly.swarm.config.undertow.HandlerConfiguration;
 import org.wildfly.swarm.config.undertow.Server;
@@ -28,7 +29,9 @@ public class Main {
             System.setProperty("jboss.http.port", port);
         }
 
-        Container container = new Container();
+        Swarm swarm = new Swarm();
+
+        //Container container = new Container();
 
         // Configure the KeycloakDS datasource to use postgres
         DatasourcesFraction datasourcesFraction = new DatasourcesFraction();
@@ -45,9 +48,11 @@ public class Main {
                     ds.password("sa");
                 });
 
-        container.fraction(datasourcesFraction);
+        //container.fraction(datasourcesFraction);
+        swarm.fraction(datasourcesFraction);
 
         // Set up container config to take advantage of HTTPS in heroku
+        /*
         container.fraction(new Fraction() {
             @Override
             public String simpleName() {
@@ -60,6 +65,7 @@ public class Main {
             }
 
         });
+        */
 
         UndertowFraction undertowFraction = new UndertowFraction();
         undertowFraction
@@ -75,14 +81,14 @@ public class Main {
                         .jspSetting(new JSPSetting()))
                 .handlerConfiguration(new HandlerConfiguration());
 
-        container.fraction(undertowFraction);
+        swarm.fraction(undertowFraction);
 
         // Finally, add KeycloakServer...
         KeycloakServerFraction keycloakServerFraction = new KeycloakServerFraction();
 
-        container.fraction(keycloakServerFraction);
+        swarm.fraction(keycloakServerFraction);
 
         // And start!
-        container.start();
+        swarm.start();
     }
 }
