@@ -32,7 +32,7 @@
                 <plugin>
                     <groupId>org.wildfly.swarm</groupId>
                     <artifactId>wildfly-swarm-plugin</artifactId>
-                    <version>1.0.0.Beta8</version>
+                    <version>2016.12.0</version>
                     <executions>
                         <execution>
                             <id>package</id>
@@ -77,12 +77,12 @@
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>keycloak-server</artifactId>
-            <version>1.0.0.CR2</version>
+            <version>2016.12.0</version>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>datasources</artifactId>
-            <version>1.0.0.CR2</version>
+            <version>2016.12.0</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
