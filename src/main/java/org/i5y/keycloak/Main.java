@@ -1,7 +1,6 @@
 package org.i5y.keycloak;
 
 import com.heroku.sdk.jdbc.DatabaseUrl;
-import org.wildfly.swarm.Swarm;
 import org.wildfly.swarm.config.undertow.BufferCache;
 import org.wildfly.swarm.config.undertow.HandlerConfiguration;
 import org.wildfly.swarm.config.undertow.Server;
@@ -23,15 +22,13 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        // Heroku requires you bind to the specified PORT
-        String port = System.getenv("PORT");
-        if (port != null) {
-            System.setProperty("swarm.http.port", port);
-        }
+        Container container = new Container();
 
-        Swarm swarm = new Swarm();
+        // Extract the postgres connection details from the Heroku environment variable
+        // (which is not a JDBC URL)
+        DatabaseUrl databaseUrl = DatabaseUrl.extract();
 
-        //Container container = new Container();
+
 
         // Configure the KeycloakDS datasource to use postgres
         DatasourcesFraction datasourcesFraction = new DatasourcesFraction();
@@ -48,12 +45,10 @@ public class Main {
                     ds.password("sa");
                 });
 
-        //container.fraction(datasourcesFraction);
-        swarm.fraction(datasourcesFraction);
+        container.fraction(datasourcesFraction);
 
         // Set up container config to take advantage of HTTPS in heroku
-        /*
-        swarm.fraction(new Fraction() {
+        container.fraction(new Fraction() {
             @Override
             public String simpleName() {
                 return "proxy-https";
@@ -65,7 +60,6 @@ public class Main {
             }
 
         });
-        */
 
         UndertowFraction undertowFraction = new UndertowFraction();
         undertowFraction
@@ -81,14 +75,14 @@ public class Main {
                         .jspSetting(new JSPSetting()))
                 .handlerConfiguration(new HandlerConfiguration());
 
-        swarm.fraction(undertowFraction);
+        container.fraction(undertowFraction);
 
         // Finally, add KeycloakServer...
         KeycloakServerFraction keycloakServerFraction = new KeycloakServerFraction();
 
-        swarm.fraction(keycloakServerFraction);
+        container.fraction(keycloakServerFraction);
 
         // And start!
-        swarm.start();
+        container.start();
     }
 }
