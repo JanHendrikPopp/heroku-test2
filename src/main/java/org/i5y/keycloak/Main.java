@@ -16,6 +16,8 @@ import org.wildfly.swarm.datasources.DatasourcesFraction;
 import org.wildfly.swarm.keycloak.server.KeycloakServerFraction;
 import org.wildfly.swarm.undertow.UndertowFraction;
 
+import java.net.URI;
+
 public class Main {
 
     public static void main(String[] args) throws Exception {
@@ -32,6 +34,13 @@ public class Main {
         // (which is not a JDBC URL)
         DatabaseUrl databaseUrl = DatabaseUrl.extract();
 
+        URI dbUri = new URI(System.getenv("DATABASE_URL"));
+
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+
+
         // Configure the KeycloakDS datasource to use postgres
         DatasourcesFraction datasourcesFraction = new DatasourcesFraction();
         datasourcesFraction
@@ -42,9 +51,9 @@ public class Main {
                 })
                 .dataSource("KeycloakDS", (ds) -> {
                     ds.driverName("org.postgresql");
-                    ds.connectionUrl(databaseUrl.jdbcUrl());
-                    ds.userName(databaseUrl.username());
-                    ds.password(databaseUrl.password());
+                    ds.connectionUrl(dbUrl);
+                    ds.userName(username);
+                    ds.password(password);
                 });
 
         container.fraction(datasourcesFraction);
